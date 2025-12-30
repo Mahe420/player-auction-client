@@ -3,13 +3,8 @@ import { createContext, useContext, useEffect, useState } from "react";
 import { io } from "socket.io-client";
 
 const AuctionContext = createContext();
-// Connect to server using current host so viewers on the LAN can reach the socket
-const socket = (() => {
-  if (typeof window === 'undefined') return io('https://player-auction-server.onrender.com')
-  const proto = window.location.protocol || 'http:'
-  const host = window.location.hostname || 'localhost'
-  return io(`${proto}//${host}:4000`)
-})()
+// Connect to the deployed server
+const socket = io('https://player-auction-server.onrender.com')
 
 export const useAuction = () => useContext(AuctionContext);
 
