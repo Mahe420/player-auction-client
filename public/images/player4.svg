@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="400" height="520">
+  <rect width="100%" height="100%" fill="#ffe4e6" />
+  <circle cx="200" cy="160" r="80" fill="#fb7185" />
+  <text x="200" y="320" font-family="Arial" font-size="36" fill="#7f1d1d" text-anchor="middle">Player 4</text>
+</svg>
