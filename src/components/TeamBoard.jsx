@@ -4,19 +4,23 @@ import { useState } from 'react'
 import Modal from './Modal'
 
 export default function TeamBoard() {
-  const { teams, started, history } = useAuction()
+  const { socket,teams, started, history } = useAuction()
   const [expanded, setExpanded] = useState(null)
-  const [selectedImg, setSelectedImg] = useState(null)
+  const [selectedPlayer, setSelectedPlayer] = useState(null)
 
   const TYPE_ROW_MAP = {
-  "batsman": "BAT",
-  "trump": "BAT", // 👈 grouped with BAT
-  "bowler": "BOWL",
-  "all_rounder": "AR",
-  "w_keeper": "WK"
-}
-
-const ROW_ORDER = ["BAT", "BOWL", "AR", "WK"]
+    "batsman": "BAT",
+    "trump": "BAT", // 👈 grouped with BAT
+    "bowler": "BOWL",
+    "all_rounder": "AR",
+    "w_keeper": "WK"
+  }
+  const trump_cards=['Player 45','Player 46','Player 47','Player 7']
+  const ROW_ORDER = ["BAT", "WK", "AR", , "BOWL"]
+  const handleTypeUpdate = (selectedPlayer) => {
+    socket.emit('updateTrump',{...selectedPlayer})
+    setSelectedPlayer(null);
+  }
 
   if (!started) return <p>Waiting for admin...</p>
   return (
@@ -52,7 +56,7 @@ const ROW_ORDER = ["BAT", "BOWL", "AR", "WK"]
                             src={h.img}
                             style={{ width: '80px', height: 'auto', cursor: 'pointer' }}
                             alt={h.player}
-                            onClick={() => setSelectedImg(h.img)}
+                            onClick={() => setSelectedPlayer(h)}
                           />
                         ))}
                       </div>
@@ -67,9 +71,50 @@ const ROW_ORDER = ["BAT", "BOWL", "AR", "WK"]
         ))}
       </div>
 
-      <Modal visible={!!selectedImg} onClose={() => setSelectedImg(null)}>
-        <img src={selectedImg} style={{ width: '100%', height: 'auto' }} alt="Player" />
+      <Modal visible={!!selectedPlayer} onClose={() => setSelectedPlayer(null)}>
+        {selectedPlayer && (
+          <div>
+            <img
+              src={selectedPlayer.img}
+              style={{ width: '100%', height: 'auto' }}
+              alt={selectedPlayer.player}
+            />
+
+            <h4 style={{ marginTop: '10px' }}>{selectedPlayer.player}</h4>
+
+            {/* 👇 Only for TRUMP */}
+            {trump_cards.includes(selectedPlayer.player) && (
+              <div style={{ marginTop: '10px' }}>
+                <label>Change Player Type:</label>
+
+                <select
+                  value={selectedPlayer.newType || ""}
+                  onChange={(e) =>
+                    setSelectedPlayer({
+                      ...selectedPlayer,
+                      newType: e.target.value
+                    })
+                  }
+                >
+                  <option value="">Select</option>
+                  <option value="batsman">Batsman</option>
+                  <option value="bowler">Bowler</option>
+                  <option value="all_rounder">All Rounder</option>
+                  <option value="w_keeper">Wicket Keeper</option>
+                </select>
+
+                <button
+                  style={{ marginLeft: '10px' }}
+                  onClick={() => handleTypeUpdate(selectedPlayer)}
+                >
+                  Save
+                </button>
+              </div>
+            )}
+          </div>
+        )}
       </Modal>
+
     </div>
   )
 }
