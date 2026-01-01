@@ -4,7 +4,8 @@ import { io } from "socket.io-client";
 
 const AuctionContext = createContext();
 // Connect to the deployed server
-const socket = io('https://player-auction-server.onrender.com')
+// const socket = io('https://player-auction-server.onrender.com')
+const socket =io('http://localhost:4000');
 
 export const useAuction = () => useContext(AuctionContext);
 

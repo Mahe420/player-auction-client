@@ -28,6 +28,7 @@ button:disabled {
 }
 
 .layout {
+	margin-top: 15px;
 	display: flex;
 	gap: 16px
 }
@@ -117,6 +118,7 @@ button:disabled {
 	}
 
 	.layout {
+		margin-top: 95px;
 		flex-direction: column
 	}
 
@@ -174,7 +176,8 @@ button:disabled {
 	}
 }
 
-@media (max-width: 420px) {
+
+@media (max-width:420px) {
 	.player-image {
 		height: auto
 	}
