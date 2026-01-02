@@ -5,6 +5,20 @@ body {
 	color: #222
 }
 
+nav a {
+	color: #333;
+	text-decoration: none;
+	padding: 5px 10px;
+}
+
+/* Styles applied only when the link is active */
+nav a.active {
+	color: #007bff;
+	/* Example: Blue color for active link */
+	font-weight: bold;
+	text-decoration: underline;
+}
+
 button {
 	padding: 8px 12px;
 	margin: 5px;
@@ -106,9 +120,9 @@ button:disabled {
 }
 
 .login {
-	position: fixed;
-	right: 12px;
-	top: 12px
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
 }
 
 /* Responsive adjustments for mobile */
@@ -160,11 +174,7 @@ button:disabled {
 		font-size: 16px
 	}
 
-	.login {
-		position: fixed;
-		right: 8px;
-		top: 8px
-	}
+
 
 	.team-item {
 		flex-direction: row;
@@ -225,4 +235,14 @@ button:disabled {
 	padding: 8px 10px;
 	border: 1px solid #ddd;
 	border-radius: 6px
+}
+
+.card-box {
+	display: flex;
+	align-items: center;
+	flex-wrap: wrap;
+	gap: 20px;
+	justify-content: center;
+	margin-top: 20px;
+
 }
